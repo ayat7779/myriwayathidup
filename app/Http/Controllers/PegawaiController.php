@@ -460,4 +460,27 @@ class PegawaiController extends Controller
 
         return redirect()->back()->with('success', 'Dokumen Digital berhasil dihapus.');
     }
+
+    /**
+     * Print Official DRH View
+     */
+    public function cetakDrh(Pegawai $pegawai)
+    {
+        $pegawai->load([
+            'opd',
+            'pangkat',
+            'pendidikanFormals.degree',
+            'pendidikanKursuses',
+            'riwayatKepangkatans.pangkat',
+            'riwayatJabatans.pangkat',
+            'tandaJasas',
+            'kunjunganLuarNegeris',
+            'keteranganKeluargas',
+            'keteranganOrganisasis',
+        ]);
+
+        return view('drh_print', [
+            'pegawai' => $pegawai,
+        ]);
+    }
 }

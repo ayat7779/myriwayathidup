@@ -16,7 +16,8 @@ import {
     Trash2,
     CheckCircle2,
     AlertCircle,
-    Upload
+    Upload,
+    Printer
 } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -296,7 +297,7 @@ const deleteDokumen = (id) => {
             <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-4">
                     <div class="w-16 h-16 rounded-2xl bg-indigo-600 text-white font-black text-xl flex items-center justify-center shadow-lg shadow-indigo-600/30 overflow-hidden shrink-0">
-                        <img v-if="pegawai.foto_path" :src="`/storage/${pegawai.foto_path}`" class="w-full h-full object-cover" />
+                        <img v-if="pegawai.foto_path" :src="'/storage/' + pegawai.foto_path" class="w-full h-full object-cover" />
                         <span v-else>{{ pegawai.nama_lengkap?.charAt(0) }}</span>
                     </div>
 
@@ -308,6 +309,15 @@ const deleteDokumen = (id) => {
                         <p class="text-xs text-slate-500 mt-0.5">{{ pegawai.jabatan_saat_ini || 'Jabatan Belum Diisi' }} • {{ pegawai.opd?.nama_opd }}</p>
                     </div>
                 </div>
+
+                <a
+                    :href="route('pegawai.cetakDrh', pegawai.id)"
+                    target="_blank"
+                    class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-md transition flex items-center gap-2 cursor-pointer shrink-0"
+                >
+                    <Printer class="w-4 h-4 text-indigo-400" />
+                    <span>Cetak DRH PDF</span>
+                </a>
             </div>
 
             <!-- Navigation Tabs -->

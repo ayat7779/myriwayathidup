@@ -11,7 +11,8 @@ import {
     Globe,
     Users,
     Building2,
-    FileCheck2
+    FileCheck2,
+    Printer
 } from 'lucide-vue-next';
 
 defineProps({
@@ -38,12 +39,21 @@ defineProps({
                     <ArrowLeft class="w-4 h-4" />
                     Kembali ke Daftar Pegawai
                 </Link>
+
+                <a
+                    :href="route('pegawai.cetakDrh', pegawai.id)"
+                    target="_blank"
+                    class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-md transition flex items-center gap-2 cursor-pointer"
+                >
+                    <Printer class="w-4 h-4 text-indigo-400" />
+                    <span>Cetak DRH Official PDF</span>
+                </a>
             </div>
 
             <!-- Profile Summary Card -->
             <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center gap-6">
                 <div class="w-24 h-24 rounded-2xl bg-indigo-100 text-indigo-700 font-bold text-2xl flex items-center justify-center shrink-0 border-2 border-indigo-200 overflow-hidden">
-                    <img v-if="pegawai.foto_path" :src="`/storage/${pegawai.foto_path}`" class="w-full h-full object-cover" />
+                    <img v-if="pegawai.foto_path" :src="'/storage/' + pegawai.foto_path" class="w-full h-full object-cover" />
                     <span v-else>{{ pegawai.nama_lengkap?.charAt(0) }}</span>
                 </div>
 
