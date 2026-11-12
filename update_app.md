@@ -8,6 +8,7 @@ Dokumen ini mencatat secara berkala tahapan-tahapan pengembangan dan pembaruan f
 
 ### **Tahap 1: Setup Framework & Baseline Project** ✅
 - Inisialisasi **Laravel 13** dan **Inertia.js v2** dengan Vue 3 & Tailwind CSS v4.
+- Konfigurasi autoload PSR-4 `'Inertia\\'` di `composer.json` untuk menjamin stabilitas middleware Inertia (`HandleInertiaRequests`).
 - Konfigurasi file `.env` dan pembuatan database MySQL (`myriwayathidup`).
 - Konfigurasi Git repository lokal dan remote ke GitHub (`https://github.com/ayat7779/myriwayathidup.git`).
 
