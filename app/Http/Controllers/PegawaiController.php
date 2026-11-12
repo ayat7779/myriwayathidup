@@ -483,4 +483,90 @@ class PegawaiController extends Controller
             'pegawai' => $pegawai,
         ]);
     }
+
+    /**
+     * Export Pegawai Data to CSV/Excel
+     */
+    public function exportCsv(Request $request)
+    {
+        $opdId = $request->input('opd_id');
+        $pangkatId = $request->input('pangkat_id');
+
+        $query = Pegawai::with(['opd', 'pangkat', 'user']);
+
+        if (auth()->user()->isOpdAdmin()) {
+            $query->where('opd_id', auth()->user()->opd_id);
+        } elseif ($opdId) {
+            $query->where('opd_id', $opdId);
+        }
+
+        if ($pangkatId) {
+            $query->where('pangkat_id', $pangkatId);
+        }
+
+        $pegawais = $query->orderBy('nama_lengkap')->get();
+
+        $fileName = 'Rekap_Pegawai_ASN_' . date('Ymd_His') . '.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0',
+        ];
+
+        $callback = function () use ($pegawais) {
+            $file = fopen('php://output', 'w');
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF)); // UTF-8 BOM
+
+            fputcsv($file, [
+                'No',
+                'NIP',
+                'NIK',
+                'Nama Lengkap',
+                'Gelar Depan',
+                'Gelar Belakang',
+                'OPD / Unit Kerja',
+                'Golongan',
+                'Nama Pangkat',
+                'Jabatan Saat Ini',
+                'Tempat Lahir',
+                'Tanggal Lahir',
+                'Jenis Kelamin',
+                'Agama',
+                'Status Perkawinan',
+                'Alamat Domisili',
+                'No Telepon',
+                'Email',
+            ]);
+
+            foreach ($pegawais as $index => $p) {
+                fputcsv($file, [
+                    $index + 1,
+                    $p->nip,
+                    $p->nik ?? '',
+                    $p->nama_lengkap,
+                    $p->gelar_depan ?? '',
+                    $p->gelar_belakang ?? '',
+                    $p->opd ? $p->opd->nama_opd : '',
+                    $p->pangkat ? $p->pangkat->golongan : '',
+                    $p->pangkat ? $p->pangkat->pangkat : '',
+                    $p->jabatan_saat_ini ?? '',
+                    $p->tempat_lahir,
+                    $p->tanggal_lahir ? $p->tanggal_lahir->format('Y-m-d') : '',
+                    $p->jenis_kelamin,
+                    $p->agama,
+                    $p->status_perkawinan,
+                    $p->alamat_domisili ?? '',
+                    $p->user ? $p->user->phone : '',
+                    $p->user ? $p->user->email : '',
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

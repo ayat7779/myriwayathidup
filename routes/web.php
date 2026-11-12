@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
 
         // Pegawai DRH Management Routes
         Route::get('/pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');
+        Route::get('/pegawai-export', [PegawaiController::class, 'exportCsv'])->name('pegawai.exportCsv');
         Route::get('/pegawai/profil', [PegawaiController::class, 'profil'])->name('pegawai.profil');
         Route::get('/pegawai/{pegawai}', [PegawaiController::class, 'show'])->name('pegawai.show');
         Route::get('/pegawai/{pegawai}/cetak-drh', [PegawaiController::class, 'cetakDrh'])->name('pegawai.cetakDrh');

@@ -9,7 +9,8 @@ import {
     Eye,
     Award,
     FileText,
-    CheckCircle2
+    CheckCircle2,
+    Download
 } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -59,6 +60,15 @@ watch([search, selectedOpd], () => {
                     <h2 class="text-xl font-bold text-slate-800 tracking-tight">Direktori Pegawai ASN</h2>
                     <p class="text-xs text-slate-500 mt-1">Daftar pegawai ASN terdata beserta status kelengkapan DRH dan dokumen digital.</p>
                 </div>
+
+                <a
+                    :href="route('pegawai.exportCsv', { opd_id: selectedOpd })"
+                    target="_blank"
+                    class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition flex items-center gap-2 cursor-pointer self-start md:self-auto"
+                >
+                    <Download class="w-4 h-4" />
+                    <span>Ekspor Data Excel / CSV</span>
+                </a>
             </div>
 
             <!-- Filter Controls -->

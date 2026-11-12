@@ -55,9 +55,13 @@ Dokumen ini mencatat secara berkala tahapan-tahapan pengembangan dan pembaruan f
 - Fitur **Cetak DRH PDF Official** lengkap dengan kolom tanda tangan Pegawai dan Kepala OPD.
 - Format CSS khusus cetak (`@media print`) untuk kertas A4.
 
+### **Tahap 8: Ekspor Data Rekapitulasi Pegawai ke Excel / CSV** ✅
+- Fitur **Ekspor Rekapitulasi Data Pegawai ASN (`/pegawai-export`)** ke format CSV/Excel dengan dukungan UTF-8 BOM.
+- Ekspor dinamis menyaring data pegawai berdasarkan OPD / Unit Kerja.
+- Penambahan tombol **Ekspor Data Excel / CSV** di Halaman Direktori Pegawai (`Pegawai/Index.vue`).
+
 ---
 
 ## 📌 Rencana Pembaruan Mendatang (Future Updates)
 - [ ] Integrasi Tanda Tangan Digital (e-Sign) BSSN.
-- [ ] Export Data Pegawai ke Excel / CSV.
 - [ ] Notifikasi Email / Whatsapp otomatis saat pendaftaran disetujui Admin.
