@@ -1,8 +1,9 @@
 <?php
 
 use App\Providers\AppServiceProvider;
+use Inertia\InertiaServiceProvider;
 
 return [
     AppServiceProvider::class,
-    Inertia\InertiaServiceProvider::class,
+    InertiaServiceProvider::class,
 ];
