@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Master\OpdController;
 use App\Http\Controllers\Master\PangkatController;
+use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\RegionController;
 use App\Http\Middleware\EnsureUserIsApproved;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,40 @@ Route::middleware('auth')->group(function () {
     // Routes requiring Admin Approval
     Route::middleware(EnsureUserIsApproved::class)->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        // Pegawai DRH Management Routes
+        Route::get('/pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');
+        Route::get('/pegawai/profil', [PegawaiController::class, 'profil'])->name('pegawai.profil');
+        Route::get('/pegawai/{pegawai}', [PegawaiController::class, 'show'])->name('pegawai.show');
+
+        Route::post('/pegawai/{pegawai}/keterangan-perorangan', [PegawaiController::class, 'updateKeteranganPerorangan'])->name('pegawai.updateKeteranganPerorangan');
+
+        Route::post('/pegawai/{pegawai}/pendidikan-formal', [PegawaiController::class, 'storePendidikanFormal'])->name('pegawai.storePendidikanFormal');
+        Route::delete('/pegawai/pendidikan-formal/{pendidikanFormal}', [PegawaiController::class, 'destroyPendidikanFormal'])->name('pegawai.destroyPendidikanFormal');
+
+        Route::post('/pegawai/{pegawai}/pendidikan-kursus', [PegawaiController::class, 'storePendidikanKursus'])->name('pegawai.storePendidikanKursus');
+        Route::delete('/pegawai/pendidikan-kursus/{pendidikanKursus}', [PegawaiController::class, 'destroyPendidikanKursus'])->name('pegawai.destroyPendidikanKursus');
+
+        Route::post('/pegawai/{pegawai}/riwayat-kepangkatan', [PegawaiController::class, 'storeRiwayatKepangkatan'])->name('pegawai.storeRiwayatKepangkatan');
+        Route::delete('/pegawai/riwayat-kepangkatan/{riwayatKepangkatan}', [PegawaiController::class, 'destroyRiwayatKepangkatan'])->name('pegawai.destroyRiwayatKepangkatan');
+
+        Route::post('/pegawai/{pegawai}/riwayat-jabatan', [PegawaiController::class, 'storeRiwayatJabatan'])->name('pegawai.storeRiwayatJabatan');
+        Route::delete('/pegawai/riwayat-jabatan/{riwayatJabatan}', [PegawaiController::class, 'destroyRiwayatJabatan'])->name('pegawai.destroyRiwayatJabatan');
+
+        Route::post('/pegawai/{pegawai}/tanda-jasa', [PegawaiController::class, 'storeTandaJasa'])->name('pegawai.storeTandaJasa');
+        Route::delete('/pegawai/tanda-jasa/{tandaJasa}', [PegawaiController::class, 'destroyTandaJasa'])->name('pegawai.destroyTandaJasa');
+
+        Route::post('/pegawai/{pegawai}/kunjungan-luar-negeri', [PegawaiController::class, 'storeKunjunganLuarNegeri'])->name('pegawai.storeKunjunganLuarNegeri');
+        Route::delete('/pegawai/kunjungan-luar-negeri/{kunjunganLuarNegeri}', [PegawaiController::class, 'destroyKunjunganLuarNegeri'])->name('pegawai.destroyKunjunganLuarNegeri');
+
+        Route::post('/pegawai/{pegawai}/keterangan-keluarga', [PegawaiController::class, 'storeKeteranganKeluarga'])->name('pegawai.storeKeteranganKeluarga');
+        Route::delete('/pegawai/keterangan-keluarga/{keteranganKeluarga}', [PegawaiController::class, 'destroyKeteranganKeluarga'])->name('pegawai.destroyKeteranganKeluarga');
+
+        Route::post('/pegawai/{pegawai}/keterangan-organisasi', [PegawaiController::class, 'storeKeteranganOrganisasi'])->name('pegawai.storeKeteranganOrganisasi');
+        Route::delete('/pegawai/keterangan-organisasi/{keteranganOrganisasi}', [PegawaiController::class, 'destroyKeteranganOrganisasi'])->name('pegawai.destroyKeteranganOrganisasi');
+
+        Route::post('/pegawai/{pegawai}/dokumen-digital', [PegawaiController::class, 'storeDokumenDigital'])->name('pegawai.storeDokumenDigital');
+        Route::delete('/pegawai/dokumen-digital/{dokumenDigital}', [PegawaiController::class, 'destroyDokumenDigital'])->name('pegawai.destroyDokumenDigital');
 
         // Admin User Approval Management
         Route::get('/admin/users', [UserApprovalController::class, 'index'])->name('admin.users.index');
