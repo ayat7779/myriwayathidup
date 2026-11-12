@@ -1,7 +1,7 @@
 <?php
 
 use App\Providers\AppServiceProvider;
-use Inertia\InertiaServiceProvider;
+use Inertia\ServiceProvider as InertiaServiceProvider;
 use Tighten\Ziggy\ZiggyServiceProvider;
 
 return [
